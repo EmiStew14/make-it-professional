@@ -54,7 +54,7 @@ const { writeFile, copyFile } = require('./utils/generateMarkdown');
       });
     };
 // TODO: Create a function to write README file
-const writeToFile =(fileName, data) => {
+const init = () => {
     return inquirer
     .prompt([
       {
@@ -155,18 +155,6 @@ const writeToFile =(fileName, data) => {
         return data;
       }
     })
-    .then((data) => {
-      
-        fs.writeFile('/.README.md', data, (err) => {
-      
-          if (err) {
-            return console.log(err);
-          }
-      
-          console.log("File Created!");
-      
-        });
-})
 .catch(error => {
     if(error.isTtyError) {
       // Prompt couldn't be rendered in the current environment
@@ -175,9 +163,21 @@ const writeToFile =(fileName, data) => {
     }
 });
 }
-
-// TODO: Create a function to initialize app
-function init() {}
+const writeFile = fileContent => {
+    return new Promise((resolve, reject) => {
+      fs.writeFile('/.README.md', fileContent, err => {
+        if (err) {
+          reject(err);
+          return;
+        }
+  
+        resolve({
+          ok: true,
+          message: 'File created!'
+        });
+      });
+    });
+  };
 
 // Function call to initialize app
 init()
