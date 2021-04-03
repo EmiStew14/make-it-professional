@@ -2,7 +2,7 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const generateMarkdown = require('./utils/generateMarkdown');
-const { writeFile, copyFile } = require('./utils/generateMarkdown');
+const writeToFile = require('./utils/generateMarkdown');
 
 // TODO: Create an array of questions for user input
  const questions = [];
@@ -142,10 +142,12 @@ const init = () => {
         default: false
       },
       {
-        type: 'input',
+        type: 'list',
         name: 'License',
         message: 'Input a license for your project',
-        default: true,
+        choices: ["Apache license 2.0","Artistic license 2.0",
+    "Boost Software License 1.0","BSD 2-clause license","BSD 3-clause license","Creative Commons Zero v1.0 Universal",
+    "Creative Commons Attribution 4.0","Creative Commons Attribution Share Alike 4.0","Do What The F*ck You Want To Public License"],
       },
     ])
     .then( data => {
@@ -163,30 +165,27 @@ const init = () => {
     }
 });
 }
-const writeFile = fileContent => {
-    return new Promise((resolve, reject) => {
-      fs.writeFile('/.README.md', fileContent, err => {
-        if (err) {
-          reject(err);
-          return;
-        }
+// const makeFile = fileContent => {
+//     return new Promise((resolve, reject) => {
+//       fs.writeFile('./dist/README.md', fileContent, err => {
+//         if (err) {
+//           reject(err);
+//           return;
+//         }
   
-        resolve({
-          ok: true,
-          message: 'File created!'
-        });
-      });
-    });
-  };
+//         resolve({
+//           ok: true,
+//           message: 'File created!'
+//         });
+//       });
+//     });
+//   };
 
 // Function call to initialize app
 init()
-    .then(writeToFile)
+    .then(reachMe)
     .then(data => {
      return generateMarkdown(data);
-   })
-   .then(pageHTML => {
-     return writeFile(pageHTML);
    })
 //   .then(writeFileResponse => {
 //     console.log(writeFileResponse);
@@ -198,3 +197,4 @@ init()
    .catch(err => {
      console.log(err);
    });
+//    console.log(makeFile());
