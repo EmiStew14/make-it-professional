@@ -36,7 +36,7 @@ const generateMarkdown = require('./utils/generateMarkdown');
    type: 'checkbox',
    name: 'toc',
    message: 'Provide a table of contents of the project (Optional)',
-   choices:['Installation', 'Usage','Credits','License'],
+   choices:['Installation', 'Usage','Credits','License','Test'],
  },
  {
    type: 'input',
@@ -92,12 +92,27 @@ const generateMarkdown = require('./utils/generateMarkdown');
  },
  {
    type: 'list',
+   pageSize: 10,
+   loop: false,
    name: 'License',
    message: 'Input a license for your project',
    choices: ["Apache license 2.0","Artistic license 2.0",
 "Boost Software License 1.0","BSD 2-clause license","BSD 3-clause license","Creative Commons Zero v1.0 Universal",
 "Creative Commons Attribution 4.0","Creative Commons Attribution Share Alike 4.0","Do What The F*ck You Want To Public License"],
  },
+ {
+     type:'input',
+     name: 'Test',
+     message: 'Write instructions on how to test your project',
+     validate: testInput => {
+        if (testInput) {
+          return true;
+        } else {
+          console.log('You need to enter test instructions!');
+          return false;
+        }
+    },
+},
  {
     type: 'input',
     name: 'name',
