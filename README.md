@@ -36,6 +36,9 @@
 
   ## License:
     BSD 2-clause license
+    
+  ## Tools:
+    HTML, JavaScript, Node.Js, Inquirer, Markdown
 
   ## Test
   > node index
